@@ -1,15 +1,210 @@
-QUICK_START.md
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-sample_sales_data.csv
+# C extensions
+*.so
 
-setup.sh
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-PITCH_DECK.md
+# PyInstaller
+*.manifest
+*.spec
 
-TECHNICAL_DOCS.md
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
-app5.py
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
 
-retail_inventory_data.csv
+# Translations
+*.mo
+*.pot
 
-venv
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Streamlit specific
+.streamlit/
+
+# Data files (uncomment if you want to ignore uploaded data)
+# data/uploads/*
+# !data/uploads/.gitkeep
+
+# Output files
+outputs/
+*.csv
+*.xlsx
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Logs
+logs/
+*.log
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Model files (if you save trained models)
+models/saved/
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Configuration files with sensitive data
+config/secrets.py
+config/credentials.json
+.secrets.toml
+
+# Cache directories
+.cache/
+cache/
+
+prompt.txt
+
+REFACTORING_SUMMARY.md
+
+COMPLETE_PROJECT_STRUCTURE.txt

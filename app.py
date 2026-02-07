@@ -20,111 +20,113 @@ from dashboard.metrics import create_metric_card
 from dashboard.layout import render_header, render_sidebar, render_welcome_screen, render_results
 
 
+def initialize_session_state():
+    """Initialize session state variables"""
+    if "analysis_done" not in st.session_state:
+        st.session_state.analysis_done = False
+
+    if "analysis_results" not in st.session_state:
+        st.session_state.analysis_results = None
+
+
 def main():
-    """Main application entry point"""
-    # Set page config
     st.set_page_config(
         page_title="Smart Inventory AI Pro",
         page_icon="🧠",
         layout="wide",
         initial_sidebar_state="expanded"
     )
-    
-    # Apply theme
+
     apply_theme()
-    
-    # Render header
+    initialize_session_state()
+
     render_header()
-    
-    # Render sidebar and get configuration
+
     config = render_sidebar()
-    
-    # Load data
+
     with st.spinner("🔄 Loading and validating data..."):
         df = load_and_validate_data(config['uploaded_file'])
-    
+
     if df is None:
         return
-    
-    # Get selected product data
+
     product_data = df[df['product_id'] == config['selected_product']].copy()
-    
+
     if len(product_data) < 14:
         st.error("❌ **Insufficient Data**: Minimum 14 days of history required for accurate forecasting")
         return
-    
-    # Run Analysis or Show Welcome Screen
+
+    # If analyze button clicked → run and STORE results
     if config['analyze_button']:
         run_analysis(product_data, config, df)
-    else:
+
+    # If already analyzed → show stored results
+    if st.session_state.analysis_done and st.session_state.analysis_results:
+        render_results(**st.session_state.analysis_results)
+
+    # Otherwise show welcome
+    if not st.session_state.analysis_done:
         render_welcome_screen(df, config['products'])
 
 
 def run_analysis(product_data, config, df):
-    """Execute the complete analysis pipeline"""
-    # Progress indicator
     progress_bar = st.progress(0)
     status_text = st.empty()
-    
+
     try:
-        # Step 1: Initialize
         status_text.text("🔧 Initializing AI forecasting engine...")
         progress_bar.progress(20)
         engine = ForecastingEngine(product_data)
-        
-        # Step 2: Forecast
+
         status_text.text("🔮 Generating ensemble predictions...")
         progress_bar.progress(40)
         forecast_dates, forecast_values, confidences = engine.ensemble_forecast(config['forecast_days'])
-        
-        # Step 3: Anomalies
+
         status_text.text("🔍 Detecting anomalies...")
         progress_bar.progress(60)
         anomaly_df = detect_anomalies_advanced(product_data)
-        
-        # Step 4: Accuracy
+
         status_text.text("📊 Calculating model accuracy...")
         progress_bar.progress(75)
         accuracy = engine.calculate_accuracy()
-        
-        # Step 5: Optimization
+
         status_text.text("🎯 Optimizing inventory levels...")
         progress_bar.progress(90)
         inventory = calculate_optimal_inventory(
-            forecast_values, 
-            confidences, 
-            config['current_stock'], 
-            config['lead_time'], 
+            forecast_values,
+            confidences,
+            config['current_stock'],
+            config['lead_time'],
             config['service_level']
         )
         inventory['lead_time'] = config['lead_time']
-        
-        # Step 6: Insights
+
         status_text.text("💡 Generating business insights...")
         progress_bar.progress(95)
         insights = generate_insights(product_data, forecast_values, anomaly_df, inventory, accuracy)
-        
+
         progress_bar.progress(100)
         status_text.text("✅ Analysis complete!")
-        
-        # Clear progress indicators
+
         time.sleep(0.5)
         progress_bar.empty()
         status_text.empty()
-        
-        # Render results
-        render_results(
-            product_data=product_data,
-            forecast_dates=forecast_dates,
-            forecast_values=forecast_values,
-            confidences=confidences,
-            anomaly_df=anomaly_df,
-            inventory=inventory,
-            insights=insights,
-            accuracy=accuracy,
-            config=config
-        )
-        
+
+        # 🔥 STORE EVERYTHING IN SESSION STATE
+        st.session_state.analysis_results = {
+            "product_data": product_data,
+            "forecast_dates": forecast_dates,
+            "forecast_values": forecast_values,
+            "confidences": confidences,
+            "anomaly_df": anomaly_df,
+            "inventory": inventory,
+            "insights": insights,
+            "accuracy": accuracy,
+            "config": config
+        }
+
+        st.session_state.analysis_done = True
+
     except Exception as e:
         st.error(f"❌ **Analysis Error:** {str(e)}")
         st.exception(e)

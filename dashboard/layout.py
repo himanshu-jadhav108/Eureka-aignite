@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 from datetime import datetime
 from dashboard.metrics import create_metric_card
 from dashboard.charts import create_dashboard
+import re
 
 
 def render_header():
@@ -435,13 +436,22 @@ def render_detailed_data(forecast_dates, forecast_values, confidences, accuracy)
             else:
                 st.info("Insufficient data for accuracy calculation (need 30+ days)")
 
+def clean_html_tags(text):
+    """Remove HTML tags from insight text"""
+    clean = re.sub(r'<.*?>', '', text)
+    return clean.strip()
+
 
 def render_export_options(forecast_dates, forecast_values, confidences, insights, config):
     """Render export options"""
-    st.markdown("## 📥 Export Options", unsafe_allow_html=True)
+
+    if forecast_dates is None:
+        return
+
+    st.markdown("## 📥 Export Options")
+
     col1, col2, col3 = st.columns(3)
-    
-    # Prepare forecast CSV
+
     forecast_df = pd.DataFrame({
         'Date': [d.strftime('%Y-%m-%d') for d in forecast_dates],
         'Forecast': [round(v) for v in forecast_values],
@@ -449,24 +459,34 @@ def render_export_options(forecast_dates, forecast_values, confidences, insights
         'Upper Bound': [round(v + c) for v, c in zip(forecast_values, confidences)],
         'Confidence (±)': [round(c) for c in confidences]
     })
-    
+
+    # 📊 Forecast CSV
     with col1:
-        forecast_csv = forecast_df.to_csv(index=False)
         st.download_button(
             label="📊 Download Forecast CSV",
-            data=forecast_csv,
-            file_name=f"forecast_{config['selected_product']}_{datetime.now().strftime('%Y%m%d')}.csv",
-            mime="text/csv"
+            data=forecast_df.to_csv(index=False).encode("utf-8"),
+            file_name=f"forecast_{config['selected_product']}.csv",
+            mime="text/csv",
+            use_container_width=True
         )
-    
+
+    # 💡 Insights TXT (Cleaned)
     with col2:
-        insights_text = "\n\n".join([insight.replace('<div class="insight-card fade-in">', '').replace('</div>', '') for insight in insights])
+        cleaned_insights = [clean_html_tags(insight) for insight in insights]
+        insights_text = "\n\n".join(cleaned_insights)
+
         st.download_button(
             label="💡 Download Insights",
-            data=insights_text,
-            file_name=f"insights_{config['selected_product']}_{datetime.now().strftime('%Y%m%d')}.txt",
-            mime="text/plain"
+            data=insights_text.encode("utf-8"),
+            file_name=f"insights_{config['selected_product']}.txt",
+            mime="text/plain",
+            use_container_width=True
         )
-    
+
+    # 📧 Placeholder
     with col3:
-        st.markdown("📧 **Email Report** *(Coming Soon)*")
+        st.button(
+            "📧 Email Report (Coming Soon)",
+            use_container_width=True,
+            disabled=True  
+        )

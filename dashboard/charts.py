@@ -135,6 +135,7 @@ def create_dashboard(historical_df, forecast_dates, forecast_values, confidences
             name='Weekly Pattern',
             text=[f'{v:.0f}' for v in weekly.values],
             textposition='outside',
+            textfont=dict(color="#1e293b", size=12),
             hovertemplate='<b>%{x}</b><br>Avg Sales: %{y:.1f} units<extra></extra>'
         ),
         row=2, col=1
@@ -162,7 +163,7 @@ def create_dashboard(historical_df, forecast_dates, forecast_values, confidences
         height=900,
         showlegend=True,
         template='plotly_white',
-        font=dict(family="Inter, sans-serif", size=12),
+        font=dict(family="Inter, sans-serif", size=12, color="#1e293b"),
         title=dict(
             text="<b>AI-Powered Inventory Intelligence Dashboard</b>",
             x=0.5,
@@ -185,7 +186,20 @@ def create_dashboard(historical_df, forecast_dates, forecast_values, confidences
     )
 
     # Update axes
-    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(203, 213, 225, 0.3)')
-    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(203, 213, 225, 0.3)')
+    fig.update_xaxes(
+    showgrid=True,
+    gridwidth=1,
+    gridcolor='rgba(203, 213, 225, 0.3)',
+    tickfont=dict(color="#1e293b"),
+    title_font=dict(color="#1e293b")
+    )
 
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='rgba(203, 213, 225, 0.3)',
+        tickfont=dict(color="#1e293b"),
+        title_font=dict(color="#1e293b")
+    )
     return fig
+

@@ -9,6 +9,7 @@ from datetime import datetime
 from dashboard.metrics import create_metric_card
 from dashboard.charts import create_dashboard
 import re
+from PIL import Image
 
 
 def render_header():

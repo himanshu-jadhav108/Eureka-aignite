@@ -148,7 +148,6 @@ outputs/
 *.pdf
 *.png
 *.jpg
-*.jpeg
 
 # Logs
 logs/

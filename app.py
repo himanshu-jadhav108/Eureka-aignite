@@ -18,7 +18,12 @@ from models.explainability import generate_insights
 from dashboard.charts import create_dashboard
 from dashboard.metrics import create_metric_card
 from dashboard.layout import render_header, render_sidebar, render_welcome_screen, render_results
+from PIL import Image
 
+# Centered Logo
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.sidebar.image("assets/sia_logo.jpeg", width=200)
 
 def initialize_session_state():
     """Initialize session state variables"""
@@ -30,9 +35,11 @@ def initialize_session_state():
 
 
 def main():
+    logo = Image.open("assets/sia_logo.jpeg")
+
     st.set_page_config(
-        page_title="Smart Inventory AI Pro",
-        page_icon="🧠",
+        page_title="SIA – Smart Inventory AI",
+        page_icon=logo,
         layout="wide",
         initial_sidebar_state="expanded"
     )

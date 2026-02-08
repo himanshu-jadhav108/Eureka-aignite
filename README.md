@@ -1,4 +1,4 @@
-# 🧠 Smart Inventory AI Pro  
+# 🧠 Smart Inventory AI 
 **AI-Powered Demand Forecasting & Inventory Optimization for Retailers**
 
 ---

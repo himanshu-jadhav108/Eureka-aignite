@@ -159,9 +159,19 @@ smart_inventory_ai/
 
 ---
 
-## 📽️ Video Link
+## 🎬 Project Demo Video
 
-🔗 **https://drive.google.com/file/d/1LqqKrBUPrDJuQnh20z9ohztSg4OZNlcq/view?usp=drivesdk**
+Watch the complete walkthrough of **SIA – Smart Inventory AI** in action:
+
+🔗 **[Click here to watch the demo video](https://drive.google.com/file/d/1LqqKrBUPrDJuQnh20z9ohztSg4OZNlcq/view?usp=drivesdk)**
+
+The demo covers:
+- Problem statement
+- System architecture flow
+- Live web application walkthrough
+- Forecasting & inventory optimization
+- Explainable AI insights
+- Future vision
 
 ---
 

@@ -156,6 +156,13 @@ smart_inventory_ai/
 ## 🖥️ Live Demo  
 
 🔗 **https://smart-inventory-ai.streamlit.app/**
+
+---
+
+## 📽️ Video Link
+
+🔗 **https://drive.google.com/file/d/1LqqKrBUPrDJuQnh20z9ohztSg4OZNlcq/view?usp=drivesdk**
+
 ---
 
 ## 🔮 Future Roadmap  

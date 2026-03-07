@@ -36,7 +36,7 @@ def calculate_optimal_inventory(forecast_values, confidences, current_stock, lea
     try:
         from scipy.stats import norm
         z_score = norm.ppf(service_level)
-    except:
+    except ImportError:
         z_score = 1.65  # Default for 95% service level
 
     # Safety stock calculation
